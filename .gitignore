@@ -1,0 +1,6 @@
+.idea/
+*.iml
+
+AbrigoAnimais/.idea/
+AbrigoAnimais/*.iml
+AbrigoAnimais/.gitignore
