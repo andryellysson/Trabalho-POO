@@ -1,6 +1,11 @@
+# IntelliJ IDEA
 .idea/
 *.iml
+**/.idea/
+**/*.iml
 
-AbrigoAnimais/.idea/
-AbrigoAnimais/*.iml
+# Ignorar código-fonte
+AbrigoAnimais/src/
+
+# Ignorar gitignore interno
 AbrigoAnimais/.gitignore
