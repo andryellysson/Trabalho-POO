@@ -1,20 +1,22 @@
 import excecoes.SenhaFracaException;
-import telas.MenuEntrada;
-import telas.MenuPrincipal;
+import telas.menu.MenuEntrada;
+import telas.menu.MenuPrincipal;
 import usuario.Usuario;
 import usuario.Administrador;
+import animais.Animal;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
 
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        ArrayList<Animal> listaAnimais = new ArrayList<>();
 
         try {
             Usuario adminPadrao = new Administrador("admin", "Admin123");
             listaUsuarios.add(adminPadrao);
         } catch (SenhaFracaException e) {
-            System.out.println("[ERRO CRÍTICO] Falha ao criar o Admin padrão: " + e.getMessage());
+            System.out.println("ERRO Falha ao criar o Admin padrão: " + e.getMessage());
         }
 
         int opcao = -1;

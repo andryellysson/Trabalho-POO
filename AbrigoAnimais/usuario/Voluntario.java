@@ -1,7 +1,7 @@
 package usuario;
 
 import excecoes.SenhaFracaException;
-import telas.MenuUsuarios;
+import telas.menu.MenuUsuarios;
 
 public class Voluntario extends Usuario {
 

@@ -1,7 +1,7 @@
 package usuario;
 
 import excecoes.SenhaFracaException;
-import telas.MenuUsuarios;
+import telas.menu.MenuUsuarios;
 
 public class Veterinario extends Usuario{
     public Veterinario(String nomeUser, String senha) throws SenhaFracaException {

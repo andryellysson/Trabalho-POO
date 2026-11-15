@@ -1,4 +1,4 @@
-package telas;
+package telas.menu;
 
 import java.util.Scanner;
 import java.util.ArrayList;
