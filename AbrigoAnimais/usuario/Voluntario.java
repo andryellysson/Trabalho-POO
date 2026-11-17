@@ -1,17 +1,21 @@
 package usuario;
 
+import eventos.Evento;
 import excecoes.SenhaFracaException;
 import telas.menu.MenuUsuarios;
 import animais.Animal;
+import telas.opcoesVoluntario.FuncoesVoluntario;
 
 import java.util.ArrayList;
 
 public class Voluntario extends Usuario {
     private ArrayList<Animal> minhasSolicitacoes;
+    private ArrayList<Evento> meusEventos;
 
     public Voluntario(String nomeUser, String senha) throws SenhaFracaException {
         super(nomeUser, senha);
         this.minhasSolicitacoes = new ArrayList<>();
+        this.meusEventos = new ArrayList<>();
     }
 
     public void adicionarSolicitacao(Animal pet) {
@@ -20,6 +24,58 @@ public class Voluntario extends Usuario {
 
     public ArrayList<Animal> getMinhasSolicitacoes() {
         return this.minhasSolicitacoes;
+    }
+
+    public ArrayList<Evento> getMeusEventos() {
+        return meusEventos;
+    }
+
+    public void participarDeEvento(ArrayList<Evento> listaEventos) {
+        FuncoesVoluntario fVoluntario = new FuncoesVoluntario();
+
+        //Mostrar os eventos e pegar o ID
+        int idEvento = fVoluntario.escolherEvento(listaEventos);
+
+        if (idEvento <= 0) {
+            return;
+        }
+
+        //Se esse evento realmente existe na lista geral
+        Evento eventoEscolhido = null;
+        for (Evento ev : listaEventos) {
+            if (ev.getId() == idEvento) {
+                eventoEscolhido = ev;
+                break;
+            }
+        }
+
+        if (eventoEscolhido == null) {
+            System.out.println("Erro: Evento não encontrado!");
+            return;
+        }
+
+        //Verifica se o voluntário já não está inscrito nesse evento!
+        if (this.meusEventos.contains(eventoEscolhido)) {
+            System.out.println("[Aviso] Você já está inscrito no evento: " + eventoEscolhido.getNome());
+            return;
+        }
+
+        // 4. Se deu tudo certo, adiciona na lista particular dele!
+        this.meusEventos.add(eventoEscolhido);
+        System.out.println("[Sucesso] Inscrição confirmada no evento: " + eventoEscolhido.getNome());
+    }
+
+    // lista todos os eventos que está participando
+    public void verMinhaAgenda() {
+        FuncoesVoluntario fVoluntario = new FuncoesVoluntario();
+        fVoluntario.listarMeusEventos(this.meusEventos);
+    }
+
+    // exibe o histórico
+    public void verHistoricoDeEventos() {
+        FuncoesVoluntario fVoluntario = new FuncoesVoluntario();
+
+        fVoluntario.exibirHistoricoParticipacoes(this.meusEventos);
     }
 
     @Override

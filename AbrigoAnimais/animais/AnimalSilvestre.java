@@ -14,7 +14,6 @@ public class AnimalSilvestre extends Animal implements Soltavel{
     // Registrar a soltura do Animal
     @Override
     public void registrarSoltura(String localDaSoltura) {
-
         if (isSaude()) {
             setPresenteNoAbrigo(false);
             System.out.println("\nO animal silvestre " + getNome() + " está saudável e foi devolvido para o(a) " + localDaSoltura);
