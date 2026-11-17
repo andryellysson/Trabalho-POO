@@ -2,7 +2,7 @@ package usuario;
 
 import excecoes.SenhaFracaException;
 import excecoes.UsuarioDuplicadoException;
-import java.util.ArrayList; // 1. Importação necessária para usar listas dinâmicas
+import java.util.ArrayList;
 
 public abstract class Usuario {
     private String nomeUser;

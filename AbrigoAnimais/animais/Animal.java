@@ -11,7 +11,7 @@ public abstract class Animal {
     private int mes;
     private int ano;
     private boolean presenteNoAbrigo;
-
+    private int id;
     protected static int qtdAnimais = 0;
 
     // Construtor Animal
@@ -26,7 +26,7 @@ public abstract class Animal {
         setMes(mes);
         setAno(ano);
         this.presenteNoAbrigo = true;
-
+        setId();
         qtdAnimais++;
     }
 
@@ -111,6 +111,14 @@ public abstract class Animal {
         if(ano >= 2026) {
             this.ano = ano;
         }
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(){
+        id++;
     }
 
     public boolean isPresenteNoAbrigo() {

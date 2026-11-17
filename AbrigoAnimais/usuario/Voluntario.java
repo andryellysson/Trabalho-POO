@@ -2,11 +2,24 @@ package usuario;
 
 import excecoes.SenhaFracaException;
 import telas.menu.MenuUsuarios;
+import animais.Animal;
+
+import java.util.ArrayList;
 
 public class Voluntario extends Usuario {
+    private ArrayList<Animal> minhasSolicitacoes;
 
     public Voluntario(String nomeUser, String senha) throws SenhaFracaException {
         super(nomeUser, senha);
+        this.minhasSolicitacoes = new ArrayList<>();
+    }
+
+    public void adicionarSolicitacao(Animal pet) {
+        this.minhasSolicitacoes.add(pet);
+    }
+
+    public ArrayList<Animal> getMinhasSolicitacoes() {
+        return this.minhasSolicitacoes;
     }
 
     @Override

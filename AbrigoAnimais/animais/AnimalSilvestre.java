@@ -7,7 +7,7 @@ import usuario.Usuario;
 public class AnimalSilvestre extends Animal implements Soltavel{
 
     // Construtor do Animal Silvestre
-    public AnimalSilvestre(String nome, String especie, String raca, int idade, double porte, boolean saude, int dia, int mes, int ano, boolean adocao) {
+    public AnimalSilvestre(String nome, String especie, String raca, int idade, double porte, boolean saude, int dia, int mes, int ano) {
         super(nome, especie, raca, idade, porte, saude, dia, mes, ano);
     }
 
