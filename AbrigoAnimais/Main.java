@@ -1,3 +1,4 @@
+import eventos.Evento;
 import excecoes.SenhaFracaException;
 import telas.menu.MenuEntrada;
 import telas.menu.MenuPrincipal;
@@ -11,6 +12,7 @@ public class Main {
 
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         ArrayList<Animal> listaAnimais = new ArrayList<>();
+        ArrayList<Evento> listaEventos = new ArrayList<>();
 
         try {
             Usuario adminPadrao = new Administrador("admin", "Admin123");
@@ -27,7 +29,7 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    MenuPrincipal.login(listaUsuarios);
+                    MenuPrincipal.login(listaUsuarios, listaAnimais, listaEventos);
                     break;
                 case 2:
                     MenuPrincipal.cadastroSistema(listaUsuarios);

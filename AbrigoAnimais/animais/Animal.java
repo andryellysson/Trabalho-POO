@@ -1,5 +1,7 @@
 package animais;
 
+import java.util.ArrayList;
+
 public abstract class Animal {
     private String nome;
     private String especie;
@@ -13,6 +15,7 @@ public abstract class Animal {
     private boolean presenteNoAbrigo;
     private int id;
     protected static int qtdAnimais = 0;
+    private ArrayList<String> prontuarioMedico;
 
     // Construtor Animal
     public Animal(String nome, String especie, String raca, int idade, double porte, boolean saude, int dia, int mes, int ano){
@@ -28,6 +31,7 @@ public abstract class Animal {
         this.presenteNoAbrigo = true;
         setId();
         qtdAnimais++;
+        this.prontuarioMedico = new ArrayList<>();
     }
 
     //Getters e Setters
@@ -131,5 +135,13 @@ public abstract class Animal {
 
     public static int getQtdAnimais(){
         return qtdAnimais;
+    }
+
+    public void setProntuarioMedico(String relatorio) {
+        this.prontuarioMedico.add(relatorio);
+    }
+
+    public ArrayList<String> getProntuarioMedico() {
+        return prontuarioMedico;
     }
 }

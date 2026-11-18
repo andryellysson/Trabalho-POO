@@ -389,4 +389,22 @@ public class FuncoesAdmin {
             System.out.println("Nenhum evento ativo no momento.");
         }
     }
+
+    public int menuRelatorios() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n\tRELATÓRIOS");
+        System.out.println("1 - Animais Resgatados");
+        System.out.println("2 - Adoções Realizadas");
+        System.out.println("3 - Animais em Tratamento");
+        System.out.println("4 - Voluntários Ativos");
+        System.out.println("5 - Eventos Realizados");
+        System.out.println("\nEscolha uma opção:");
+        System.out.print("> ");
+
+        try {
+            return Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
 }

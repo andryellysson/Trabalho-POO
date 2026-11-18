@@ -1,5 +1,7 @@
 package usuario;
 
+import animais.Animal;
+import eventos.Evento;
 import excecoes.SenhaFracaException;
 import excecoes.UsuarioDuplicadoException;
 import java.util.ArrayList;
@@ -94,7 +96,6 @@ public abstract class Usuario {
         }
     }
 
-    public abstract void notificacoes();
-
-    public abstract void exibirMenu();
+    public abstract void notificacoes(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos);
+    public abstract void exibirMenu(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos);
 }

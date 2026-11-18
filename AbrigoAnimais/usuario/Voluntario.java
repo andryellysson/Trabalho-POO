@@ -78,14 +78,34 @@ public class Voluntario extends Usuario {
         fVoluntario.exibirHistoricoParticipacoes(this.meusEventos);
     }
 
+    //NOtificações
     @Override
-    public void notificacoes(){
+    public void notificacoes(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
+        System.out.println("\n\tNOTIFICAÇÕES");
+        int cont = 0;
 
+        // Avisa sobre os eventos agendados para este voluntário
+        for (Evento ev : this.meusEventos) {
+            if (ev.isAtivo()) {
+                System.out.println("[LEMBRETE] Você tem o evento '" + ev.getNome() + "' agendado para às " + ev.getHora() + ".");
+                cont++;
+            }
+        }
+
+        // Avisa sobre as solicitações de adoção
+        if (!this.minhasSolicitacoes.isEmpty()) {
+            System.out.println("[AVISO] Você tem " + this.minhasSolicitacoes.size() + " solicitação(ões) de adoção aguardando aprovação.");
+            cont++;
+        }
+
+        if (cont == 0) {
+            System.out.println("Tudo tranquilo! Nenhuma notificação nova no momento.");
+        }
     }
 
     // Exibe o menu do Voluntário
     @Override
-    public void exibirMenu() {
+    public void exibirMenu(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
         int opcao = -1;
 
         do {

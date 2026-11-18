@@ -17,8 +17,47 @@ public class Administrador extends Usuario{
     }
 
     @Override
-    public void notificacoes(){
+    public void notificacoes(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
+        System.out.println("\n\tNOTIFICAÇÕES");
+        int cont = 0;
 
+        //Procurar por novas adoções pendentes
+        int adocoesPendentes = 0;
+        for (Usuario user : listaUsuarios) {
+            if (user instanceof Voluntario) {
+                Voluntario vol = (Voluntario) user;
+                adocoesPendentes += vol.getMinhasSolicitacoes().size();
+            }
+        }
+
+        if (adocoesPendentes > 0) {
+            System.out.println("[NOVA ADOÇÃO] Há " + adocoesPendentes + " solicitação(ões) de adoção aguardando sua análise e aprovação!");
+            cont++;
+        }
+
+        //Notificação de usuário cadastrados
+        int totalUsuarios = listaUsuarios.size();
+        if (totalUsuarios > 1) { // Maior que 1 para não contar o próprio Admin que está logado
+            System.out.println("[NOVOS USUÁRIOS] O sistema possui " + totalUsuarios + " usuários cadastrados para você gerenciar.");
+            cont++;
+        }
+
+        //Notificação de novos animais resgatados
+        int animaisNoAbrigo = 0;
+        for (Animal pet : listaAnimais) {
+            if (pet.isPresenteNoAbrigo()) {
+                animaisNoAbrigo++;
+            }
+        }
+
+        if (animaisNoAbrigo > 0) {
+            System.out.println("[NOVOS ANIMAIS] Há " + animaisNoAbrigo + " animal(is) no abrigo no momento, aguardando adoção ou tratamento.");
+            cont++;
+        }
+
+        if (cont == 0) {
+            System.out.println("Tudo atualizado! Nenhuma nova atividade pendente para gerenciamento.");
+        }
     }
 
     public void removerAnimal(ArrayList<Animal> listaAnimais){
@@ -197,8 +236,159 @@ public class Administrador extends Usuario{
         }
     }
 
+    //Animais Resgatados
+    public void relatorioAnimaisResgatados(ArrayList<Animal> listaAnimais) {
+        System.out.println("\n\tRELATÓRIO: ANIMAIS RESGATADOS (NO ABRIGO)");
+        int cont = 0;
+        for (Animal pet : listaAnimais) {
+            if (pet.isPresenteNoAbrigo()) {
+                System.out.println("ID: " + pet.getId() + " | Nome: " + pet.getNome() + " | Espécie: " + pet.getEspecie());
+                cont++;
+            }
+        }
+        System.out.println("Total de animais aguardando adoção: " + cont);
+    }
+
+    //Adoções Realizadas
+    public void relatorioAdocoesRealizadas(ArrayList<Animal> listaAnimais) {
+        System.out.println("\n\tRELATÓRIO: ADOÇÕES REALIZADAS");
+        int cont = 0;
+        for (Animal pet : listaAnimais) {
+            if (!pet.isPresenteNoAbrigo()) {
+                System.out.println("ID: " + pet.getId() + " | Nome: " + pet.getNome() + " | Espécie: " + pet.getEspecie() + " -> [ADOTADO]");
+                cont++;
+            }
+        }
+        if (cont == 0) {
+            System.out.println("Nenhuma adoção realizada ainda.");
+        } else {
+            System.out.println("Total de vidas salvas com novas famílias: " + cont);
+        }
+    }
+
+    //Animais em Tratamento
+    public void relatorioAnimaisEmTratamento(ArrayList<Animal> listaAnimais) {
+        System.out.println("\n\tRELATÓRIO: ANIMAIS EM TRATAMENTO");
+        int cont = 0;
+        for (Animal pet : listaAnimais) {
+            if (pet.isPresenteNoAbrigo() && !pet.isSaude()) {
+                System.out.println("ID: " + pet.getId() + " | Nome: " + pet.getNome() + " | Em tratamento médico.");
+                cont++;
+            }
+        }
+        if (cont == 0) {
+            System.out.println("Ótima notícia! Nenhum animal em tratamento.");
+        } else {
+            System.out.println("Total de animais doentes/em recuperação: " + cont);
+        }
+    }
+
+    //Voluntários Ativos
+    public void relatorioVoluntariosAtivos(ArrayList<Usuario> listaUsuarios) {
+        System.out.println("\n\tRELATÓRIO: VOLUNTÁRIOS ATIVOS");
+        int cont = 0;
+        for (Usuario user : listaUsuarios) {
+            // Verifica se o usuário atual é uma instância da classe Voluntario
+            if (user instanceof Voluntario) {
+                System.out.println("Nome do Voluntário: " + user.getNomeUser());
+                cont++;
+            }
+        }
+        if (cont == 0) {
+            System.out.println("Nenhum voluntário cadastrado no momento.");
+        } else {
+            System.out.println("Total de voluntários ajudando o abrigo: " + cont);
+        }
+    }
+
+    //Eventos Realizados
+    public void relatorioEventosRealizados(ArrayList<Evento> listaEventos) {
+        System.out.println("\n\tRELATÓRIO: EVENTOS REALIZADOS");
+
+        if (listaEventos.isEmpty()) {
+            System.out.println("Nenhum evento registrado até o momento.");
+        } else {
+            for (Evento ev : listaEventos) {
+                // Transforma o boolean 'ativo' em um texto para o Admin
+                String statusEvento = ev.isAtivo() ? "Em andamento / Aberto" : "Finalizado";
+
+                System.out.println("ID: " + ev.getId());
+                System.out.println("Evento: " + ev.getNome());
+                System.out.println("Horário: " + ev.getHora());
+                System.out.println("Local: " + ev.getLocal());
+                System.out.println("Status: " + statusEvento);
+                System.out.println("Participantes: " + ev.getTotalParticipantes());
+            }
+            System.out.println("Total histórico de eventos/campanhas: " + listaEventos.size());
+        }
+    }
+
+    public void exibirEstatisticas(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
+        System.out.println("\n\tSTATÍSTICAS DO ABRIGO");
+
+        if (listaAnimais.isEmpty()) {
+            System.out.println("Aviso: Nenhum animal cadastrado ainda.");
+            System.out.println("Não é possível gerar estatísticas de adoção.\n");
+            return;
+        }
+
+        //Coleta de Dados
+        int totalResgatados = listaAnimais.size();
+        int adotados = 0;
+        int noAbrigo = 0;
+        int saudaveisNoAbrigo = 0;
+
+        for (Animal pet : listaAnimais) {
+            if (!pet.isPresenteNoAbrigo()) {
+                adotados++;
+            } else {
+                noAbrigo++;
+                if (pet.isSaude()) {
+                    saudaveisNoAbrigo++;
+                }
+            }
+        }
+
+        int totalEventos = listaEventos.size();
+        int eventosAtivos = 0;
+        int somaParticipantes = 0;
+
+        for (Evento ev : listaEventos) {
+            if (ev.isAtivo()) {
+                eventosAtivos++;
+            }
+            somaParticipantes += ev.getTotalParticipantes();
+        }
+
+        //Taxas de adoção e saúde
+        double taxaAdocao = (adotados * 100.0) / totalResgatados;
+        double taxaSaude = 0.0;
+
+        if (noAbrigo > 0) {
+            taxaSaude = (saudaveisNoAbrigo * 100.0) / noAbrigo;
+        }
+
+        System.out.println("INDICADORES DE ADOÇÃO");
+        System.out.println("Total Histórico de Resgates: " + totalResgatados);
+        System.out.println("Animais Adotados: " + adotados);
+        System.out.printf("Taxa de Sucesso (Adoções): %.2f%%\n", taxaAdocao);
+        System.out.println();
+
+        System.out.println("INDICADORES DE OCUPAÇÃO E SAÚDE");
+        System.out.println("Animais morando no abrigo hoje: " + noAbrigo);
+        System.out.println("Animais Saudáveis (Aptos): " + saudaveisNoAbrigo);
+        System.out.printf("Índice de Saúde do Abrigo: %.2f%%\n", taxaSaude);
+        System.out.println();
+
+        System.out.println("INDICADORES DE ENGAJAMENTO (EVENTOS)");
+        System.out.println("Total de Eventos Criados: " + totalEventos);
+        System.out.println("Eventos em Andamento: " + eventosAtivos);
+        System.out.println("Soma Total de Participantes: " + somaParticipantes);
+        System.out.println("\n");
+    }
+
     @Override
-    public void exibirMenu(){
+    public void exibirMenu(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos){
         int opcao = -1;
 
         do {

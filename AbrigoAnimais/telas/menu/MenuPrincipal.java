@@ -7,11 +7,13 @@ import usuario.Voluntario;
 import usuario.Veterinario;
 import excecoes.SenhaFracaException;
 import excecoes.UsuarioDuplicadoException;
+import animais.Animal;
+import eventos.Evento;
 
 public class MenuPrincipal {
 
-    //Login
-    public static void login(ArrayList<Usuario> users) {
+    // Login
+    public static void login(ArrayList<Usuario> users, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("\n\tSISTEMA DE GERENCIAMENTO DE ABRIGOS\n");
@@ -20,12 +22,15 @@ public class MenuPrincipal {
         System.out.print("Senha: ");
         String senha = sc.nextLine();
 
-        // Vejo de não tem um usuario já existente
+        // Vejo se não tem um usuario já existente
         Usuario usuarioLogado = autenticarUsuario(users, user, senha);
 
         if (usuarioLogado != null) {
             System.out.println("\nLogin realizado com sucesso! Bem-vindo(a), " + user + ".");
-            usuarioLogado.exibirMenu();
+
+            //Passamos apenas os nomes das variáveis!
+            usuarioLogado.exibirMenu(listaAnimais, listaEventos);
+
         } else {
             System.out.println("\nErro: Usuário ou senha incorretos.");
         }
