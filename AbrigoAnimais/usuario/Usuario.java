@@ -97,5 +97,5 @@ public abstract class Usuario {
     }
 
     public abstract void notificacoes(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos);
-    public abstract void exibirMenu(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos);
+    public abstract void exibirMenu(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos);
 }

@@ -105,7 +105,8 @@ public class Voluntario extends Usuario {
 
     // Exibe o menu do Voluntário
     @Override
-    public void exibirMenu(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
+    public void exibirMenu(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
+        FuncoesVoluntario fVoluntario = new FuncoesVoluntario();
         int opcao = -1;
 
         do {
@@ -115,24 +116,56 @@ public class Voluntario extends Usuario {
                 switch (opcao) {
                     case 1:
                         // Visualizar Animais Disponíveis
+                        System.out.println("\n\tANIMAIS DISPONÍVEIS PARA ADOÇÃO");
+                        fVoluntario.visualizarAnimaisDisponiveis(listaAnimais);
                         break;
+
                     case 2:
                         // Solicitar Adoções
+                        int idEscolhido = fVoluntario.solicitarAdocao(listaAnimais);
+
+                        Animal animalEncontrado = null;
+                        for (Animal pet : listaAnimais) {
+                            if (pet.getId() == idEscolhido) {
+                                animalEncontrado = pet;
+                                break;
+                            }
+                        }
+
+                        if (animalEncontrado == null) {
+                            System.out.println("Erro: Animal não encontrado! Verifique o ID digitado.");
+                        } else if (this.minhasSolicitacoes.contains(animalEncontrado)) {
+                            System.out.println("[Aviso] Você já solicitou a adoção deste animal e está aguardando aprovação.");
+                        } else {
+                            this.adicionarSolicitacao(animalEncontrado);
+                            System.out.println("Solicitação de adoção para " + animalEncontrado.getNome() + " enviada ao Administrador!");
+                        }
                         break;
+
                     case 3:
                         // Consultar Minhas Solicitações
+                        fVoluntario.exibirMinhasSolicitacoes(this);
                         break;
+
                     case 4:
                         // Participar de Eventos
+                        this.participarDeEvento(listaEventos);
                         break;
+
                     case 5:
                         // Histórico de Participações
+                        this.verHistoricoDeEventos();
                         break;
+
                     case 6:
                         // Notificações
+                        this.notificacoes(listaUsuarios, listaAnimais, listaEventos);
+                        break;
+
                     case 0:
                         System.out.println("\nSaindo da área do Voluntário...");
                         break;
+
                     default:
                         System.out.println("\nErro: Opção inválida! Escolha um número de 0 a 6.");
                 }

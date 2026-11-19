@@ -112,7 +112,7 @@ public abstract class Animal {
     }
 
     public void setAno(int ano) {
-        if(ano >= 2026) {
+        if(ano > 0) {
             this.ano = ano;
         }
     }

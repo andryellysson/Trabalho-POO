@@ -207,8 +207,9 @@ public class Veterinario extends Usuario{
         }
     }
 
+    //Exibir menu do Veterinario
     @Override
-    public void exibirMenu(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos){
+    public void exibirMenu(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
         int opcao = -1;
 
         do {
@@ -218,24 +219,38 @@ public class Veterinario extends Usuario{
                 switch (opcao) {
                     case 1:
                         // Consultar Animais
+                        this.consultarAnimais(listaAnimais);
                         break;
+
                     case 2:
                         // Registrar Atendimentos
+                        this.registrarAtendimento(listaAnimais);
                         break;
+
                     case 3:
                         // Atualizar Tratamentos
+                        this.atualizarTratamentos(listaAnimais);
                         break;
+
                     case 4:
                         // Registrar Vacinação
+                        this.registrarVacinacao(listaAnimais);
                         break;
+
                     case 5:
                         // Emitir Relatórios Médicos
+                        this.emitirRelatorioMedico(listaAnimais);
                         break;
+
                     case 6:
                         // Notificações
+                        this.notificacoes(listaUsuarios, listaAnimais, listaEventos);
+                        break;
+
                     case 0:
                         System.out.println("\nSaindo da área do Veterinário...");
                         break;
+
                     default:
                         System.out.println("\nErro: Opção inválida! Escolha um número de 0 a 6.");
                 }

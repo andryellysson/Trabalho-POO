@@ -28,8 +28,8 @@ public class MenuPrincipal {
         if (usuarioLogado != null) {
             System.out.println("\nLogin realizado com sucesso! Bem-vindo(a), " + user + ".");
 
-            //Passamos apenas os nomes das variáveis!
-            usuarioLogado.exibirMenu(listaAnimais, listaEventos);
+            // CORREÇÃO AQUI: Passando 'users' como o primeiro parâmetro!
+            usuarioLogado.exibirMenu(users, listaAnimais, listaEventos);
 
         } else {
             System.out.println("\nErro: Usuário ou senha incorretos.");

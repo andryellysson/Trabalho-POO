@@ -387,8 +387,11 @@ public class Administrador extends Usuario{
         System.out.println("\n");
     }
 
+    //Exibe o menu do Admin
     @Override
-    public void exibirMenu(ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos){
+    public void exibirMenu(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
+        Scanner sc = new Scanner(System.in);
+        FuncoesAdmin fAdmin = new FuncoesAdmin();
         int opcao = -1;
 
         do {
@@ -398,35 +401,83 @@ public class Administrador extends Usuario{
                 switch (opcao) {
                     case 1:
                         // Gerenciar Animais
+                        System.out.println("\n\tGERENCIAR ANIMAIS");
+                        System.out.println("1 - Cadastrar Animal");
+                        System.out.println("2 - Editar Animal");
+                        System.out.println("3 - Remover Animal");
+                        System.out.println("0 - Voltar");
+                        System.out.print("> ");
+                        int opAnimal = Integer.parseInt(sc.nextLine());
+
+                        if (opAnimal == 1) this.cadastrarAnimais(listaAnimais);
+                        else if (opAnimal == 2) this.editarAnimal(listaAnimais);
+                        else if (opAnimal == 3) this.removerAnimal(listaAnimais);
                         break;
+
                     case 2:
-                        // Gerenciar Usuarios
+                        // Gerenciar Usuários
+                        this.listarUsers(listaUsuarios);
                         break;
+
                     case 3:
                         // Aprovar Adoções
+                        this.aprovarAdocoes(listaUsuarios, listaAnimais);
                         break;
+
                     case 4:
                         // Gerenciar Eventos
+                        this.gerenciarEventos(listaEventos, listaUsuarios);
                         break;
+
                     case 5:
                         // Relatórios
+                        int opRelatorio = fAdmin.menuRelatorios();
+                        switch (opRelatorio) {
+                            case 1:
+                                this.relatorioAnimaisResgatados(listaAnimais);
+                                break;
+                            case 2:
+                                this.relatorioAdocoesRealizadas(listaAnimais);
+                                break;
+                            case 3:
+                                this.relatorioAnimaisEmTratamento(listaAnimais);
+                                break;
+                            case 4:
+                                this.relatorioVoluntariosAtivos(listaUsuarios);
+                                break;
+                            case 5:
+                                this.relatorioEventosRealizados(listaEventos);
+                                break;
+                            case 0:
+                                break;
+                            default:
+                                System.out.println("Opção de relatório inválida!");
+                                break;
+                        }
                         break;
+
                     case 6:
                         // Estatísticas
+                        this.exibirEstatisticas(listaAnimais, listaEventos);
                         break;
+
                     case 7:
                         // Notificações
+                        this.notificacoes(listaUsuarios, listaAnimais, listaEventos);
+                        break;
+
                     case 0:
                         System.out.println("\nSaindo da área do Admin...");
                         break;
+
                     default:
-                        System.out.println("\nErro: Opção inválida! Escolha um número de 0 a 6.");
+                        System.out.println("\nErro: Opção inválida! Escolha um número de 0 a 7.");
                 }
             } catch (Exception e) {
-                System.out.println("\nErro: Entrada inválida. Tente novamente.");
+                System.out.println("\nErro: Entrada inválida. Digite apenas números.");
                 opcao = -1;
             }
 
-        } while (opcao != 0); // Só sai desse menu se a pessoa digitar 0
+        } while (opcao != 0);
     }
 }
