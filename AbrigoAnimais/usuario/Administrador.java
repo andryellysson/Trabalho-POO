@@ -387,6 +387,11 @@ public class Administrador extends Usuario{
         System.out.println("\n");
     }
 
+    public void soltarAnimalSilvestre(ArrayList<Animal> listaAnimais) {
+        FuncoesAdmin fAdmin = new FuncoesAdmin();
+        fAdmin.soltarAnimal(listaAnimais);
+    }
+
     //Exibe o menu do Admin
     @Override
     public void exibirMenu(ArrayList<Usuario> listaUsuarios, ArrayList<Animal> listaAnimais, ArrayList<Evento> listaEventos) {
@@ -405,6 +410,7 @@ public class Administrador extends Usuario{
                         System.out.println("1 - Cadastrar Animal");
                         System.out.println("2 - Editar Animal");
                         System.out.println("3 - Remover Animal");
+                        System.out.println("4 - Soltar Animal Silvestre na Natureza");
                         System.out.println("0 - Voltar");
                         System.out.print("> ");
                         int opAnimal = Integer.parseInt(sc.nextLine());
@@ -412,11 +418,27 @@ public class Administrador extends Usuario{
                         if (opAnimal == 1) this.cadastrarAnimais(listaAnimais);
                         else if (opAnimal == 2) this.editarAnimal(listaAnimais);
                         else if (opAnimal == 3) this.removerAnimal(listaAnimais);
+                        else if (opAnimal == 4) this.soltarAnimalSilvestre(listaAnimais);
                         break;
 
                     case 2:
                         // Gerenciar Usuários
-                        this.listarUsers(listaUsuarios);
+                        System.out.println("\n\tGERENCIAR USUÁRIOS");
+                        System.out.println("1 - Listar Usuários");
+                        System.out.println("2 - Remover Usuário");
+                        System.out.println("0 - Voltar");
+                        System.out.print("> ");
+
+                        int opUser = Integer.parseInt(sc.nextLine());
+
+                        if (opUser == 1) {
+                            fAdmin.listarUsuarios(listaUsuarios);
+                        } else if (opUser == 2) {
+                            fAdmin.listarUsuarios(listaUsuarios); // Lista primeiro para o Admin ver quem ele quer apagar
+                            fAdmin.removerUsuario(listaUsuarios); // Depois chama a função de apagar
+                        } else if (opUser != 0) {
+                            System.out.println("Opção inválida!");
+                        }
                         break;
 
                     case 3:

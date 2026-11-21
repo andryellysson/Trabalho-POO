@@ -134,14 +134,22 @@ public class Voluntario extends Usuario {
 
                         if (animalEncontrado == null) {
                             System.out.println("Erro: Animal não encontrado! Verifique o ID digitado.");
+
                         } else if (this.minhasSolicitacoes.contains(animalEncontrado)) {
                             System.out.println("[Aviso] Você já solicitou a adoção deste animal e está aguardando aprovação.");
+
+                        } else if (animalEncontrado instanceof interfaces.Adotavel) {
+
+                            // Transformamos o animal genérico na interface Adotavel
+                            interfaces.Adotavel petAdotavel = (interfaces.Adotavel) animalEncontrado;
+
+                            // se reservar, salvar na lista deste voluntário e imprimir a mensagem!
+                            petAdotavel.solicitarAdocao(this);
+
                         } else {
-                            this.adicionarSolicitacao(animalEncontrado);
-                            System.out.println("Solicitação de adoção para " + animalEncontrado.getNome() + " enviada ao Administrador!");
+                            System.out.println("Erro: Este animal é Silvestre! Pela lei, ele não pode ser adotado, apenas devolvido à natureza.");
                         }
                         break;
-
                     case 3:
                         // Consultar Minhas Solicitações
                         fVoluntario.exibirMinhasSolicitacoes(this);

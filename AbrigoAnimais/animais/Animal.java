@@ -29,8 +29,7 @@ public abstract class Animal {
         setMes(mes);
         setAno(ano);
         this.presenteNoAbrigo = true;
-        setId();
-        qtdAnimais++;
+        this.id = ++qtdAnimais;
         this.prontuarioMedico = new ArrayList<>();
     }
 
@@ -119,10 +118,6 @@ public abstract class Animal {
 
     public int getId(){
         return id;
-    }
-
-    public void setId(){
-        id++;
     }
 
     public boolean isPresenteNoAbrigo() {

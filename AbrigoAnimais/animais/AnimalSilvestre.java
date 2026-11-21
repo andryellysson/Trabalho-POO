@@ -1,7 +1,6 @@
 package animais;
 
 import interfaces.Soltavel;
-import usuario.Usuario;
 
 // Classe Animal Silvestre
 public class AnimalSilvestre extends Animal implements Soltavel{

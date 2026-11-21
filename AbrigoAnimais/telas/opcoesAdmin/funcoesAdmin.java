@@ -160,7 +160,8 @@ public class FuncoesAdmin {
         // Busca animal pelo Id
         Animal animalParaEditar = null;
         for (Animal pet : listaAnimais) {
-            if (pet.getId() == id) {
+            //Só deixa editar se estiver no abrigo
+            if (pet.getId() == id && pet.isPresenteNoAbrigo()) {
                 animalParaEditar = pet;
                 break;
             }
@@ -405,6 +406,53 @@ public class FuncoesAdmin {
             return Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
             return -1;
+        }
+    }
+
+    //Soltar Animal Silvestre
+    public void soltarAnimal(ArrayList<Animal> listaAnimais) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n\tDEVOLVER ANIMAL À NATUREZA");
+
+        boolean achouSilvestre = false;
+        for (Animal pet : listaAnimais) {
+            // Checa se está no abrigo
+            if (pet.isPresenteNoAbrigo() && pet instanceof interfaces.Soltavel) {
+                String statusSaude = pet.isSaude() ? "Saudável" : "Em Tratamento";
+                System.out.println("ID: " + pet.getId() + " | Espécie: " + pet.getEspecie() + " | Nome: " + pet.getNome() + " | Status: " + statusSaude);
+                achouSilvestre = true;
+            }
+        }
+
+        if (!achouSilvestre) {
+            System.out.println("Não há animais silvestres no abrigo no momento.");
+            return;
+        }
+
+        System.out.print("\nDigite o ID do animal silvestre a ser solto (ou 0 para cancelar): ");
+        try {
+            int idEscolhido = Integer.parseInt(sc.nextLine());
+            if (idEscolhido == 0) return;
+
+            for (Animal pet : listaAnimais) {
+                if (pet.getId() == idEscolhido) {
+
+                    // Verifica se ele realmente pode ser solto
+                    if (pet instanceof interfaces.Soltavel) {
+                        System.out.print("Qual o local da soltura? (Ex: Floresta, Cerrado): ");
+                        String local = sc.nextLine();
+
+                        interfaces.Soltavel petSoltavel = (interfaces.Soltavel) pet;
+                        petSoltavel.registrarSoltura(local);
+                    } else {
+                        System.out.println("Erro: Você digitou o ID de um Animal Doméstico! Eles não podem ser soltos na natureza.");
+                    }
+                    return;
+                }
+            }
+            System.out.println("Erro: Animal não encontrado! Verifique o ID.");
+        } catch (NumberFormatException e) {
+            System.out.println("Erro: Digite apenas números!");
         }
     }
 }

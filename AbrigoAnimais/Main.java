@@ -18,7 +18,7 @@ public class Main {
             Usuario adminPadrao = new Administrador("admin", "Admin123");
             listaUsuarios.add(adminPadrao);
         } catch (SenhaFracaException e) {
-            System.out.println("ERRO Falha ao criar o Admin padrão: " + e.getMessage());
+            System.out.println("ERRO: Falha ao criar o Admin padrão: " + e.getMessage());
         }
 
         int opcao = -1;
